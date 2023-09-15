@@ -76,6 +76,7 @@ void loop(){
     else if (command == "7") {POWER_LIMIT = 70.0; ESP_LOGD("LOOP", "SPEED = 70");}
     else if (command == "8") {POWER_LIMIT = 80.0; ESP_LOGD("LOOP", "SPEED = 80");}
     else if (command == "9") {POWER_LIMIT = 100.0; ESP_LOGD("LOOP", "SPEED = 100");}
-    else if (command == "S") {control_2_board(0,0,0); ESP_LOGD("LOOP", "STOP");}
-	else {control_2_board(0,0,0); ESP_LOGD("LOOP", "STOP");}
+    else if (command == "S") {vTaskDelay(100 / portTICK_PERIOD_MS); control_2_board(0,0,0); ESP_LOGD("LOOP", "STOP");}
+	else {vTaskDelay(100 / portTICK_PERIOD_MS); control_2_board(0,0,0); ESP_LOGD("LOOP", "STOP");}
+	vTaskDelay(100 / portTICK_PERIOD_MS);
 }
