@@ -9,6 +9,7 @@
 mcu_state_t mcu_status = MCU_STATE_INIT;	// MCU Status (see utils.hpp)
 conn_state_t conn_status = CONN_STATE_INIT;	// Connection Status (see utils.hpp)
 WebServer *server;
+String command; // In order to not instantiate a new String object every loop, we declare it here (save us some time)
 
 void setup(){
 	const char* TAG = "SETUP";
@@ -47,9 +48,9 @@ void setup(){
 	}while(WiFi.softAPgetStationNum() != 1);
 
 	// Waiting for controller to send "P" (Power On) command
-	//do{
-	//	// Don't know yet, be creative, put the LED to blink or something
-	//}while(server->arg("State") != "P");
+	do{
+		server->handleClient();
+	}while(server->arg("State") != "P");
 
 	// Activating Controller Board
 	switch_board_power();
@@ -64,9 +65,6 @@ void setup(){
 
 	ESP_LOGI(TAG, "Setup Complete");
 }
-
-
-String command; // In order to not instantiate a new String object every loop, we declare it here (save us some time)
 
 void loop(){
 	server->handleClient();
