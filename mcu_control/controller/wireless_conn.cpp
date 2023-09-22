@@ -3,8 +3,10 @@
 #include <WiFi.h> 
 #include "wireless_conn.hpp"
 #include "utils.hpp"
+#include "config.h"
 
 extern WebServer *server;
+extern conn_state_t conn_status;	// Connection Status (see utils.hpp)
 
 void wifi_start(){
     const char* TAG = "WIFI";
@@ -19,6 +21,7 @@ void wifi_start(){
     ESP_LOGD(TAG, "Access Point Started");
 
     IPAddress IP = WiFi.softAPIP(); // Access Point IP Address
+    conn_status = CONN_STATE_INIT;
     ESP_LOGI(TAG, "Access Point IP Address: %s", IP.toString().c_str());
 }
 
@@ -44,5 +47,16 @@ void web_server_start(){
     });
 
     server->begin();
+    conn_status = CONN_STATE_READY;
     ESP_LOGI(TAG, "Web Server Started");
+}
+
+void wifi_events_watchdog(WiFiEvent_t event) {
+  if (event == ARDUINO_EVENT_WIFI_AP_STADISCONNECTED) {
+    conn_status = CONN_STATE_DISCONNECTED;
+    ESP_LOGE("WIFI", "Client disconnected");
+  } else if (event == ARDUINO_EVENT_WIFI_AP_STACONNECTED) {
+    conn_status = CONN_STATE_CONNECTED;
+    ESP_LOGI("WIFI", "Client connected");
+  }
 }

@@ -1,10 +1,5 @@
 #pragma once
 
-#define WIFI_SSID "Canoa"
-#define LED0 5
-#define LED1 18
-#define PWR 15
-
 /**
  * @brief Microcontroller state
  * 
@@ -31,3 +26,5 @@ typedef enum conn_state {
 } conn_state_t;
 
 void status_led_blink(void * param);
+
+void status_led_init();
