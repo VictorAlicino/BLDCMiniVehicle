@@ -40,9 +40,9 @@ void _i2c_callback(){
 }
 
 void switch_board_power(){
-    digitalWrite(15, HIGH);
+    digitalWrite(PWR, HIGH);
     vTaskDelay(100 / portTICK_PERIOD_MS);
-    digitalWrite(15, LOW);
+    digitalWrite(PWR, LOW);
 }
 
 /** Função que define as variáveis x e y que serão enviadas para a placa do hover board. \n

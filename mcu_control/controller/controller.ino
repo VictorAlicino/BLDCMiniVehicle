@@ -54,9 +54,10 @@ void setup(){
 
 	// Activating Controller Board
 	switch_board_power();
-	do{
-		// This shouldn't take long, 
-	}while(digitalRead(BOARD_PWR) != HIGH); // Waiting for Controller Board to turn on
+	// TODO: Test if this will work (probably not)
+	//do{
+	//	// This shouldn't take long, 
+	//}while(digitalRead(BOARD_PWR) != HIGH); // Waiting for Controller Board to turn on
 	// Initializing I²C Bus
 	// I²C Configuration -> Slave Addr = 0x52 / SDA = 21 / SCL = 22 / Clock = 100kHz
 	Wire.begin(0x52, 21, 22, 100000);
@@ -96,8 +97,8 @@ void loop(){
 		ESP_LOGD("LOOP", "Client disconnected"); 
 		EMERGENCY_SHUTDOWN();
 	}
-	if(digitalRead(BOARD_PWR) == LOW){ 
-		ESP_LOGD("LOOP", "Board offline"); 
-		EMERGENCY_SHUTDOWN();
-	}
+	//if(digitalRead(BOARD_PWR) == LOW){ 
+	//	ESP_LOGD("LOOP", "Board offline"); 
+	//	EMERGENCY_SHUTDOWN();
+	//}
 }
