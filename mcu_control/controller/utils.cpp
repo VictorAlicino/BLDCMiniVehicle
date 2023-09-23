@@ -25,31 +25,14 @@ void status_led_init(){
 
 void status_led_blink(void * param){
     while(true){
-        switch(mcu_status){
-            case MCU_STATE_INIT:
+        switch(conn_status){
+            case CONN_STATE_INIT:
+            case CONN_STATE_READY:
                 digitalWrite(LED0, HIGH);
                 digitalWrite(LED1, HIGH);
                 vTaskDelay(500 / portTICK_PERIOD_MS);
+                digitalWrite(LED1, LOW);
                 digitalWrite(LED0, LOW);
-                digitalWrite(LED1, LOW);
-                break;
-            case MCU_STATE_READY:
-                break;
-            case MCU_STATE_OK:
-                break;
-            case MCU_STATE_ERROR:
-                break;
-            default:
-                break;
-        }
-
-        switch(conn_status){
-            case CONN_STATE_INIT:
-                break;
-            case CONN_STATE_READY:
-                digitalWrite(LED0, HIGH);
-                vTaskDelay(500 / portTICK_PERIOD_MS);
-                digitalWrite(LED1, LOW);
                 vTaskDelay(500 / portTICK_PERIOD_MS);
                 break;
             case CONN_STATE_CONNECTED:
@@ -66,4 +49,27 @@ void status_led_blink(void * param){
                 break;
         }
     }
+}
+
+void status_led_connected(){
+    digitalWrite(LED0, LOW);
+    digitalWrite(LED1, LOW);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+    digitalWrite(LED0, HIGH);
+    digitalWrite(LED1, HIGH);
+    vTaskDelay(300 / portTICK_PERIOD_MS);
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED0, LOW);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+    digitalWrite(LED0, HIGH);
+    digitalWrite(LED1, HIGH);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED0, LOW);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+    digitalWrite(LED0, HIGH);
+    digitalWrite(LED1, HIGH);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED0, LOW);
 }

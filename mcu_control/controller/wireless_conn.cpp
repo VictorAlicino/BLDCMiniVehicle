@@ -57,6 +57,7 @@ void wifi_events_watchdog(WiFiEvent_t event) {
     ESP_LOGE("WIFI", "Client disconnected");
   } else if (event == ARDUINO_EVENT_WIFI_AP_STACONNECTED) {
     conn_status = CONN_STATE_CONNECTED;
+    status_led_connected();
     ESP_LOGI("WIFI", "Client connected");
   }
 }

@@ -41,10 +41,7 @@ void setup(){
 	// Waiting for controller to connect
 	ESP_LOGD(TAG, "Waiting for Client connection");
 	do{
-		digitalWrite(2, HIGH);
-		vTaskDelay(500 / portTICK_PERIOD_MS);
-		digitalWrite(2, LOW);
-		vTaskDelay(500 / portTICK_PERIOD_MS);
+		
 	}while(WiFi.softAPgetStationNum() != 1);
 
 	// Waiting for controller to send "P" (Power On) command

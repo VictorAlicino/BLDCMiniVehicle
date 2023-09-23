@@ -28,3 +28,5 @@ typedef enum conn_state {
 void status_led_blink(void * param);
 
 void status_led_init();
+
+void status_led_connected();
