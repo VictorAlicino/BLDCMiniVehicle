@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "utils.hpp"
 #include "config.h"
+#include "motors_control.hpp"
 
 extern mcu_state_t mcu_status;
 extern conn_state_t conn_status;
@@ -47,6 +48,18 @@ void status_led_blink(void * param){
                 break;
             default:
                 break;
+        }
+    }
+}
+
+void safety_test(){
+    const char* TAG = "SAFETY TEST";
+    if(digitalRead(BOARD_PWR) == HIGH){
+        ESP_LOGW(TAG, "Controller Board is already on, turning it off...");
+        switch_board_power();
+        while(digitalRead(BOARD_PWR) != LOW){
+            switch_board_power();
+            vTaskDelay(2500 / portTICK_PERIOD_MS);
         }
     }
 }
