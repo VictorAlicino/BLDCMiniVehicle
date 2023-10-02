@@ -1,6 +1,11 @@
 #pragma once
 
-void switch_board_power();
+typedef enum motor_state{
+    ON = 1,
+    OFF = 0
+}motor_state_t;
+
+void switch_board_power(motor_state_t state);
 
 void _i2c_callback();
 

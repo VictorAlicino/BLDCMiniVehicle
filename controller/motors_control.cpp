@@ -39,10 +39,34 @@ void _i2c_callback(){
     }
 }
 
-void switch_board_power(){
-    digitalWrite(PWR, HIGH);
-    vTaskDelay(100 / portTICK_PERIOD_MS);
-    digitalWrite(PWR, LOW);
+void switch_board_power(motor_state_t state){
+	int motor_state = digitalRead(BOARD_PWR);
+	
+	if (state == ON){
+		if(motor_state == LOW){
+			digitalWrite(PWR, HIGH);
+			vTaskDelay(100 / portTICK_PERIOD_MS);
+			digitalWrite(PWR, LOW);
+		}
+		else{
+			ESP_LOGE(MOTORS_TAG, "Board already ON");
+		}
+	}
+
+	else if (state == OFF){
+		if(motor_state == HIGH){
+			digitalWrite(PWR, HIGH);
+			vTaskDelay(100 / portTICK_PERIOD_MS);
+			digitalWrite(PWR, LOW);
+		}
+		else{
+			ESP_LOGE(MOTORS_TAG, "Board already OFF");
+		}
+	}
+
+	else{
+		ESP_LOGE(MOTORS_TAG, "Invalid state");
+	}
 }
 
 /** Função que define as variáveis x e y que serão enviadas para a placa do hover board. \n
@@ -113,8 +137,8 @@ void EMERGENCY_SHUTDOWN(){
 	ESP_LOGE(MOTORS_TAG, "EMERGENCY SHUTDOWN");
 
 	while(digitalRead(BOARD_PWR) != LOW){
-		switch_board_power(); 
-		vTaskDelay(1000 / portTICK_PERIOD_MS);
+		switch_board_power(OFF); 
+		vTaskDelay(1500 / portTICK_PERIOD_MS);
 	}
 	ESP_LOGE(MOTORS_TAG, "Restarting...");
 	ESP.restart();

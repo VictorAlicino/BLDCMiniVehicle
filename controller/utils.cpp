@@ -56,9 +56,9 @@ void safety_test(){
     const char* TAG = "SAFETY TEST";
     if(digitalRead(BOARD_PWR) == HIGH){
         ESP_LOGW(TAG, "Controller Board is already on, turning it off...");
-        switch_board_power();
+        switch_board_power(OFF);
         while(digitalRead(BOARD_PWR) != LOW){
-            switch_board_power();
+            switch_board_power(OFF);
             vTaskDelay(2500 / portTICK_PERIOD_MS);
         }
     }
