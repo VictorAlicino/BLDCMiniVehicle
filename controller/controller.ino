@@ -24,6 +24,7 @@ void setup(){
 
 	pinMode(PWR, OUTPUT); // Controller Board On/Off Relay
 	ESP_LOGD(TAG, "Controller Board Relay armed");
+	safety_test(); // Testing if the motor is already on for some reason, and turns it off if it is
 
 	pinMode(BOARD_PWR, INPUT_PULLDOWN); 
 	// Check the optocoupler attached to board power in order to know if the board is on or off
@@ -48,13 +49,12 @@ void setup(){
 	do{
 		server->handleClient();
 	}while(server->arg("State") != "P");
+	switch_board_power();
 
 	// Activating Controller Board
-	switch_board_power();
-	// TODO: Test if this will work (probably not)
-	//do{
-	//	// This shouldn't take long, 
-	//}while(digitalRead(BOARD_PWR) != HIGH); // Waiting for Controller Board to turn on
+	do{
+		// This shouldn't take long, 
+	}while(digitalRead(BOARD_PWR) != HIGH); // Waiting for Controller Board to turn on
 	// Initializing I²C Bus
 	// I²C Configuration -> Slave Addr = 0x52 / SDA = 21 / SCL = 22 / Clock = 100kHz
 	Wire.begin(0x52, 21, 22, 100000);
@@ -87,6 +87,7 @@ void loop(){
 	else if (command == "8") {motor_speed(80);}
 	else if (command == "9") {motor_speed(100);}
 	else if (command == "S") {motor_stop();}
+	else if (command == "SPO") {switch_board_power();} // Vai saber né
 	else {control_2_board(0, 0, 0);}
 	vTaskDelay(100 / portTICK_PERIOD_MS);
 
@@ -94,8 +95,8 @@ void loop(){
 		ESP_LOGD("LOOP", "Client disconnected"); 
 		EMERGENCY_SHUTDOWN();
 	}
-	//if(digitalRead(BOARD_PWR) == LOW){ 
-	//	ESP_LOGD("LOOP", "Board offline"); 
-	//	EMERGENCY_SHUTDOWN();
-	//}
+	if(digitalRead(BOARD_PWR) == LOW){ 
+		ESP_LOGD("LOOP", "Board offline"); 
+		EMERGENCY_SHUTDOWN();
+	}
 }

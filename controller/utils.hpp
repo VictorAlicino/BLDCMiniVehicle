@@ -30,3 +30,5 @@ void status_led_blink(void * param);
 void status_led_init();
 
 void status_led_connected();
+
+void safety_test();
