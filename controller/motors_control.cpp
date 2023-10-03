@@ -47,6 +47,7 @@ void switch_board_power(motor_state_t state){
 			digitalWrite(PWR, HIGH);
 			vTaskDelay(100 / portTICK_PERIOD_MS);
 			digitalWrite(PWR, LOW);
+			ESP_LOGD(MOTORS_TAG, "Board ON");
 		}
 		else{
 			ESP_LOGE(MOTORS_TAG, "Board already ON");
@@ -58,6 +59,7 @@ void switch_board_power(motor_state_t state){
 			digitalWrite(PWR, HIGH);
 			vTaskDelay(100 / portTICK_PERIOD_MS);
 			digitalWrite(PWR, LOW);
+			ESP_LOGD(MOTORS_TAG, "Board ON");
 		}
 		else{
 			ESP_LOGE(MOTORS_TAG, "Board already OFF");

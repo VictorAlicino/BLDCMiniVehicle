@@ -45,7 +45,7 @@ void setup(){
 		
 	}while(WiFi.softAPgetStationNum() != 1);
 
-	// Waiting for controller to send "P" (Power On) command
+	// Waiting for controller to send "PON" (Power On) command
 	do{
 		server->handleClient();
 	}while(server->arg("State") != "PON");
