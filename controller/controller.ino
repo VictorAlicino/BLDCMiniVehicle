@@ -60,6 +60,7 @@ void setup(){
 	Wire.begin(0x52, 21, 22, 100000);
 	Wire.onRequest(_i2c_callback); // I²C Callback Function for send data to Controller Board
 	ESP_LOGD(TAG, "I2C Bus Initialized");
+	control_2_board(0, 0, 0);
 
 	ESP_LOGI(TAG, "Setup Complete");
 }
