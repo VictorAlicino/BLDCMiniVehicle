@@ -59,7 +59,7 @@ void safety_test(){
         switch_board_power(OFF);
         while(digitalRead(BOARD_PWR) != LOW){
             switch_board_power(OFF);
-            vTaskDelay(2500 / portTICK_PERIOD_MS);
+            vTaskDelay(5000 / portTICK_PERIOD_MS);
         }
     }
 }

@@ -88,7 +88,6 @@ void loop(){
 	else if (command == "8") {motor_speed(80);}
 	else if (command == "9") {motor_speed(100);}
 	else if (command == "S") {motor_stop();}
-	else if (command == "PON") {switch_board_power(ON);} // Power On
 	else if (command == "POFF") {switch_board_power(OFF);} // Vai saber né
 	else if (command == "wait") { /* Do nothing */ }
 	else {control_2_board(0, 0, 0);}
